@@ -28,8 +28,8 @@ vehic_ind <- grepl("vehicle", as.character(SCC$EI.Sector), ignore.case = TRUE)
 # subsetting global SCC df and getting SCC # for the motor vehicle sources
 vehic_sources <- as.character(SCC[vehic_ind, 1])
 
-# subsetting global data for the motor vehicle sources
-vehicles <- subset(NEI, SCC %in% vehic_sources)
+# subsetting global data for the motor vehicle sources in Baltimore City
+vehicles <- subset(NEI, SCC %in% vehic_sources & fips == "24510")
 
 # grouping data for further plotting
 vehiclesbyyear <- with(vehicles, tapply(Emissions, year, sum))
@@ -38,9 +38,8 @@ vehiclesbyyear <- with(vehicles, tapply(Emissions, year, sum))
 par(mar = c(3,5,5,4))
 plot(names(vehiclesbyyear), vehiclesbyyear, ann=FALSE, type = "o", pch = 20, xaxt="n")
 axis(1, at = names(vehiclesbyyear))
-title(main = "Total emissions from PM2.5 in the US 
-from motor vehicle sources
-      from 1999 to 2008",
+title(main = "Total emissions from PM2.5 in Baltimore City 
+from motor vehicle sources from 1999 to 2008",
       ylab = "Amount of PM2.5 emitted, in tons")
 
 # copying to png file
