@@ -47,12 +47,12 @@ library(ggplot2)
 g <- ggplot(vehicles_grouped, aes(year, Emissions))
 
 # plotting
-g + geom_line(lwd = 1) +
-    facet_grid(. ~ county) +
-    labs(title = "Total emissions from PM2.5 for the motor vehicle sources
-    in Baltimore City and Los Angeles County from 1999 to 2008") +
-    labs(y = "Amount of PM2.5 emitted, in tons") +
-    theme_grey(base_size = 14)
+print(g + geom_line(lwd = 1) +
+          facet_grid(. ~ county) +
+          labs(title = "Total emissions from PM2.5 for the motor vehicle sources 
+in Baltimore City and Los Angeles County from 1999 to 2008") +
+          labs(y = "Amount of PM2.5 emitted, in tons") +
+          theme_grey(base_size = 14))
 
 
 # copying to png file
