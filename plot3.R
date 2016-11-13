@@ -38,7 +38,7 @@ g <- ggplot(baltimor_grouped, aes(year, Emissions))
 # plotting
 g + geom_line(lwd = 1) +
     facet_grid(. ~ type) +
-    labs(title = "Total emissions from PM2.5 in the Baltimore City, Maryland \n
+    labs(title = "Total emissions from PM2.5 in the Baltimore City, Maryland
     from 1999 to 2008 by type of source") +
     labs(y = "Amount of PM2.5 emitted, in tons") +
     theme_grey(base_size = 14)
