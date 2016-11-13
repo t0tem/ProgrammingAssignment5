@@ -1,5 +1,5 @@
 ## this script follows Course Project 2 of 'Exploratory data analysis' from JHU on Coursera
-## and creates Plot 4 from Question 4
+## and creates Plot 5 from Question 5
 
 # function to download and unzip the data archive to R working directory
 get_file <- function () {
@@ -22,33 +22,27 @@ if (file1 %in% dir() & file2 %in% dir()) {
     warning("files were not found in working directory")
 }
 
-# looking for sources matching to 'coal' in 'SCC.Level.Three'
-coal_ind <- grepl("coal", as.character(SCC$SCC.Level.Three), ignore.case = TRUE)
+# looking for sources matching to 'vehicle' in 'EI.Sector'
+vehic_ind <- grepl("vehicle", as.character(SCC$EI.Sector), ignore.case = TRUE)
 
-# looking for sources matching to 'comb' (for combustion) in 'EI.Sector'
-comb_ind <- grepl("comb", as.character(SCC$EI.Sector), ignore.case = TRUE)
+# subsetting global SCC df and getting SCC # for the motor vehicle sources
+vehic_sources <- as.character(SCC[vehic_ind, 1])
 
-# merging vectors to get indices of coal combustion-related sources
-coal_comb_ind <- coal_ind & comb_ind
-
-# subsetting global SCC df and getting SCC # for the coal combustion-related sources
-coal_comb_sources <- as.character(SCC[coal_comb_ind, 1])
-
-# subsetting global data for the coal combustion-related sources
-coalcomb <- subset(NEI, SCC %in% coal_comb_sources)
+# subsetting global data for the motor vehicle sources
+vehicles <- subset(NEI, SCC %in% vehic_sources)
 
 # grouping data for further plotting
-coalcombbyyear <- with(coalcomb, tapply(Emissions, year, sum))
+vehiclesbyyear <- with(vehicles, tapply(Emissions, year, sum))
 
 # plotting
 par(mar = c(3,5,5,4))
-plot(names(coalcombbyyear), coalcombbyyear, ann=FALSE, type = "o", pch = 20, xaxt="n")
-axis(1, at = names(coalcombbyyear))
+plot(names(vehiclesbyyear), vehiclesbyyear, ann=FALSE, type = "o", pch = 20, xaxt="n")
+axis(1, at = names(vehiclesbyyear))
 title(main = "Total emissions from PM2.5 in the US 
-from coal combustion-related sources 
+from motor vehicle sources
       from 1999 to 2008",
       ylab = "Amount of PM2.5 emitted, in tons")
 
 # copying to png file
-dev.copy(png, file = "plot4.png")
+dev.copy(png, file = "plot5.png")
 dev.off()
